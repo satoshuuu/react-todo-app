@@ -1,14 +1,41 @@
 import React from 'react';
 import TodoList from './TodoList';
+import Form from './Form'
 
 class App extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        list: ['レポート課題', 'テスト勉強'],
+      };
+    }
+
+    handleChange = (event) => {
+      this.setState({value: event.target.value});
+    }
+
+    handleSubmit = (event) => {
+      event.preventDefault();
+
+      this.setState({
+        list: [
+          ...this.state.list,
+          this.state.value,
+        ],
+        value: '',
+      });
+    }
+
   render() {
-    const list = ['レポート課題', 'テスト勉強'];
-    
     return (
       <div>
         <h1>TODOアプリ</h1>
-        <TodoList list={list}/>
+        <Form 
+          value={this.state.value}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+        <TodoList list={this.state.list}/>
       </div>
     );
   }
